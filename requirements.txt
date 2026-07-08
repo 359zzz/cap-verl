@@ -1,0 +1,9 @@
+# 项目级依赖
+# cap-x 和 verl 的依赖请分别在各自仓库中安装
+
+# 常用工具
+pandas
+pyarrow
+numpy
+tqdm
+tyro
