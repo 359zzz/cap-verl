@@ -1,0 +1,24 @@
+* text=auto eol=lf
+
+# Explicit LF for shell/Python/config files
+*.sh text eol=lf
+*.py text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.gitmodules text eol=lf
+*.gitattributes text eol=lf
+
+# Binary files (do not normalize)
+*.parquet binary
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
