@@ -1,0 +1,11 @@
+# Visual configuration for synthetic data generation (franka_nut_assembly_code_env).
+# Uses FrankaControlNutAssemblyVisualApi with Molmo / SAM3 / PyRoKi.
+env:
+  _target_: capx.envs.tasks.franka.franka_nut_assembly.FrankaNutAssemblyCodeEnv
+  cfg:
+    _target_: capx.envs.tasks.base.CodeExecEnvConfig
+    low_level: franka_robosuite_nut_assembly_low_level
+    privileged: false
+    enable_render: true
+    apis:
+      - FrankaControlNutAssemblyVisualApi

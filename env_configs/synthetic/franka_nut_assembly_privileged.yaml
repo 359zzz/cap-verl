@@ -1,0 +1,12 @@
+# Privileged configuration for synthetic data generation (franka_nut_assembly_code_env).
+# Reads ground-truth nut/peg poses and executes generated code for validation.
+# No visual rendering is required.
+env:
+  _target_: capx.envs.tasks.franka.franka_nut_assembly.FrankaNutAssemblyCodeEnv
+  cfg:
+    _target_: capx.envs.tasks.base.CodeExecEnvConfig
+    low_level: franka_robosuite_nut_assembly_low_level
+    privileged: true
+    enable_render: false
+    apis:
+      - FrankaControlNutAssemblyPrivilegedApi

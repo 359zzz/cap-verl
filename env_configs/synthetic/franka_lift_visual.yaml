@@ -1,0 +1,13 @@
+# Visual configuration for synthetic data generation (franka_lift_code_env).
+# Uses FrankaControlApi with SAM3 / Contact-GraspNet / PyRoKi to produce
+# realistic visual prompts. The generated code is validated in the privileged
+# variant of the same environment.
+env:
+  _target_: capx.envs.tasks.franka.franka_lift.FrankaLiftCodeEnv
+  cfg:
+    _target_: capx.envs.tasks.base.CodeExecEnvConfig
+    low_level: franka_robosuite_cube_lift_low_level
+    privileged: false
+    enable_render: true
+    apis:
+      - FrankaControlApi
