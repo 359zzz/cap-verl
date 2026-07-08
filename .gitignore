@@ -1,7 +1,3 @@
-# 子仓库独立管理
-cap-x/
-verl/
-
 # Python
 __pycache__/
 *.py[cod]

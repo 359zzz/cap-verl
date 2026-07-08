@@ -1,0 +1,6 @@
+[submodule "cap-x"]
+	path = cap-x
+	url = https://github.com/359zzz/cap-x.git
+[submodule "verl"]
+	path = verl
+	url = https://github.com/359zzz/verl.git
