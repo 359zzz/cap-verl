@@ -64,6 +64,20 @@ def replace_argument(
     return _apply
 
 
+def replace_string(
+    old: str,
+    new: str,
+) -> Callable[[str, np.random.Generator], str]:
+    """Replace the first occurrence of a literal string with another string."""
+
+    def _apply(code: str, _rng: np.random.Generator) -> str:
+        if old not in code:
+            raise ValueError(f"String {old!r} not found in code")
+        return code.replace(old, new, 1)
+
+    return _apply
+
+
 def choose_perturbation(
     specs: list[PerturbationSpec],
     rng: np.random.Generator,

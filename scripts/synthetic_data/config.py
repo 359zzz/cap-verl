@@ -13,6 +13,7 @@ from synthetic_data.perturbations import (
     remove_line_containing,
     replace_argument,
     replace_assignment,
+    replace_string,
 )
 from synthetic_data.types import CodeGenerator
 
@@ -117,24 +118,22 @@ register_task(
         code_generator=LiftCodeGenerator(),
         perturbation_specs=[
             PerturbationSpec(
-                name="missing_open_gripper",
+                name="missing_close_gripper",
+                weight=0.35,
+                description="Omit close_gripper() so the cube is not grasped",
+                apply=remove_line_containing("close_gripper()"),
+            ),
+            PerturbationSpec(
+                name="no_lift",
+                weight=0.35,
+                description="Set lift height to 0.0 so the cube is grasped but not lifted",
+                apply=replace_assignment("lift_offset", "np.array([0.0, 0.0, 0.0])"),
+            ),
+            PerturbationSpec(
+                name="wrong_object",
                 weight=0.3,
-                description="Omit open_gripper() before grasping",
-                apply=remove_line_containing("open_gripper()"),
-            ),
-            PerturbationSpec(
-                name="z_approach_zero",
-                weight=0.35,
-                description="Set the first z_approach to 0.0 so the gripper crashes into the cube",
-                apply=replace_argument("z_approach", "0.0"),
-            ),
-            PerturbationSpec(
-                name="lift_height_too_low",
-                weight=0.35,
-                description="Set lift height too low to count as a successful lift",
-                apply=replace_assignment(
-                    "lift_offset", "np.array([0.0, 0.0, 0.030])"
-                ),
+                description='Query a non-existent "green cube" instead of the red cube',
+                apply=replace_string('"red cube"', '"green cube"'),
             ),
         ],
     )
