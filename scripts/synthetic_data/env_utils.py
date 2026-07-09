@@ -2,8 +2,33 @@
 
 from __future__ import annotations
 
+import contextlib
+import os
 from pathlib import Path
 from typing import Any
+
+
+def _capx_root() -> Path:
+    """Return the absolute path to the ``cap-x`` submodule root.
+
+    ``cap-x`` uses relative paths in several default controller configs, so we
+    need to be in the ``cap-x`` root while instantiating environments.
+    """
+    return Path(__file__).resolve().parents[2] / "cap-x"
+
+
+@contextlib.contextmanager
+def _capx_working_dir():
+    """Temporarily switch the working directory to ``cap-x`` root."""
+    capx_root = _capx_root()
+    if not capx_root.exists():
+        raise FileNotFoundError(f"cap-x submodule not found at {capx_root}")
+    original = os.getcwd()
+    try:
+        os.chdir(capx_root)
+        yield
+    finally:
+        os.chdir(original)
 
 
 def load_code_env(yaml_path: Path) -> Any:
@@ -26,7 +51,12 @@ def load_code_env(yaml_path: Path) -> Any:
         raise ValueError(f"YAML config {yaml_path} must contain an 'env' key")
 
     env_factory = configs_dict["env"]
-    env = capx_instantiate(env_factory)
+
+    # cap-x default controller configs use relative paths; run instantiation
+    # from the cap-x root directory.
+    with _capx_working_dir():
+        env = capx_instantiate(env_factory)
+
     if not isinstance(env, CodeExecutionEnvBase):
         raise TypeError(
             f"Instantiated env is {type(env).__name__}, expected CodeExecutionEnvBase"
